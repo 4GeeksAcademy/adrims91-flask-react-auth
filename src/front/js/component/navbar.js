@@ -1,17 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AppContext } from "../context/AppContext";
 
 export const Navbar = () => {
+	const {state} = useContext(AppContext)
 	return (
-		<nav className="navbar navbar-light bg-light">
-			<div className="container">
-				<Link to="/">
-					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
-				</Link>
+		<nav className="navbar">
+			<div className="container-fluid">
+				<Link className="btn btn-primary" to={"/"}>Home</Link>
 				<div className="ml-auto">
-					<Link to="/demo">
-						<button className="btn btn-primary">Check the Context in action</button>
-					</Link>
+					{!state.isAuthenticated ? <><Link className="btn btn-primary me-1" to={"/login"}>Login</Link>
+					<Link className="btn btn-primary" to={"/register"}>Register</Link></> : ''}
+					
 				</div>
 			</div>
 		</nav>
