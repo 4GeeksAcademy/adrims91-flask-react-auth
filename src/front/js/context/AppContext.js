@@ -24,9 +24,10 @@ export const AppProvider = ({ children }) => {
                 dispatch({ type: 'REGISTER_ERROR', payload: { error: data.error } });
             }
         } catch (error) {
-            dispatch({ type: 'REGISTER_ERROR', payload: { error: data.error } });
+            dispatch({ type: 'REGISTER_ERROR', payload: { error: 'Error de red o del servidor' } });
         }
-    }
+    };
+
     const login = async (email, password) => {
         try {
             const response = await fetch('https://didactic-guide-x5964qx4g6g43vr9-3001.app.github.dev/api/login', {
@@ -39,19 +40,25 @@ export const AppProvider = ({ children }) => {
 
             if (response.ok) {
                 const data = await response.json();
-                dispatch({ type: 'LOGIN_SUCCESS', payload: { message: 'Autenticado.', user: data.email, token: data.token, id: data.id } });
+                dispatch({ type: 'LOGIN_SUCCESS', payload: { message: 'Autenticado.', user: data.user, token: data.token, id: data.id } });
             } else {
-                const errorData = await response.json()
+                const errorData = await response.json();
                 dispatch({ type: 'LOGIN_ERROR', payload: { error: errorData.error } });
             }
         } catch (error) {
-            const errorData = await response.json()
-            dispatch({ type: 'LOGIN_ERROR', payload: { error: errorData.error } });
+            dispatch({ type: 'LOGIN_ERROR', payload: { error: 'Error de red o del servidor' } });
         }
-    }
+    };
+
+    const logout = async () => {
+        dispatch({ type: 'LOGOUT', payload: { message: 'Sesión cerrada.' } });
+        setTimeout(() => {
+            dispatch({ type: 'CLEAR_MESSAGE' });
+        }, 1000);
+    };
 
     return (
-        <AppContext.Provider value={{ state, dispatch, register, login }}>
+        <AppContext.Provider value={{ state, dispatch, register, login, logout }}>
             {children}
         </AppContext.Provider>
     );

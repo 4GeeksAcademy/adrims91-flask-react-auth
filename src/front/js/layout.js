@@ -3,8 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Navbar } from "./component/navbar";
 import { AppProvider } from "./context/AppContext";
 
-
-import { Private } from "./pages/Private";
+import { Home } from "./pages/Home";
+import { Private } from "./pages/private";
+import { Private2 } from "./pages/privateFake";
 import { Register } from "./component/Register";
 import { Login } from "./component/Login";
 
@@ -21,7 +22,9 @@ const Layout = () => {
                 <Router basename={basename}>
                     <Navbar />
                     <Routes>
-                        <Route element={<Private />} path="/" />
+                        <Route element={<Home />} path="/" />
+                        <Route element={<Private />} path="/private" />
+                        <Route element={<Private2/>} path="/private2" />
                         <Route element={<Register />} path="/register" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<h1>Not found!</h1>} path="*" />

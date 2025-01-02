@@ -54,6 +54,25 @@ export const AppReducer = (state, action) => {
                 loading: false,
                 isAuthenticated: false
             }
+        case 'LOGOUT':
+            sessionStorage.removeItem('token')
+            sessionStorage.removeItem('id')
+            sessionStorage.removeItem('user')
+            return {
+                ...state,
+                error: null,
+                message: action.payload.message,
+                user: null,
+                id: null,
+                token: null,
+                loading: false,
+                isAuthenticated: false
+            }
+        case 'CLEAR_MESSAGE':
+            return {
+                ...state,
+                message: null
+            }
         default:
             return state
     }

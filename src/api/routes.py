@@ -1,9 +1,8 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
+from flask import Flask, request, jsonify, Blueprint
 from api.models import db, User
-from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
 import re
@@ -46,4 +45,13 @@ def login():
     if not check_password_hash(user.password, data['password']):
         return jsonify({"error": "Contraseña incorrecta"}), 401
     token = create_access_token(identity=user.email)
-    return jsonify({"token": token, "id": user.id})
+    return jsonify({"token": token, "id": user.id, "user": user.email})
+
+@api.route('/private', methods=['GET'])
+@jwt_required()
+def private():
+    current_user_email = get_jwt_identity()
+    user = User.query.filter_by(email=current_user_email).first()
+    if not user:
+        return jsonify({"error": "Usuario no encontrado"}), 404
+    return jsonify({"user": user.email, "id": user.id})

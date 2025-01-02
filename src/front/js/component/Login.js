@@ -1,21 +1,23 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AppContext } from "../context/AppContext";
+import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
     const { state, login } = useContext(AppContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (state.isAuthenticated) {
             setTimeout(() => {
-                window.location.href = "/private";
-            }, 2000);
+                navigate('/private')
+            }, 1000);
         }
         if (state.error) {
             setTimeout(() => {
-                window.location.href = "/login";
-            }, 2000);
+                navigate('/login')
+            }, 1000);
         }
     }, [state]);
 
