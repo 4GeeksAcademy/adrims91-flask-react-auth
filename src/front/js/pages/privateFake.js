@@ -11,7 +11,7 @@ export const Pr1vate = () => {
     }, [])
     return (
         <div>
-            <h1 className="alert alert-danger">Debes estar autenticado para entrar en la página privada.</h1>
+            <h1 className="alert alert-danger text-center mt-5">Debes estar autenticado para entrar en la página privada.</h1>
         </div>
     )
 }

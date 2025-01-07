@@ -19,6 +19,9 @@ def create_user():
     data = request.get_json()
     if "email" not in data or "password" not in data:
         return jsonify({"error": "Faltan datos obligatorios"}), 422
+    if len(data['password']) < 8:
+        return jsonify({"error": "La contraseña debe tener al menos 8 caracteres"}), 400
+    
     email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
 
     if not re.match(email_regex, data['email']):
