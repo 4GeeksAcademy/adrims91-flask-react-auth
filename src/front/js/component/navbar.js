@@ -9,7 +9,7 @@ export const Navbar = () => {
 	return (
 		<nav className="navbar">
 			<div className="container-fluid">
-				{state.isAuthenticated ? <><div><Link className="btn btn-primary me-1" to={"/"}>Home</Link><Link className="btn btn-success" to={"/private"}>Privado</Link></div></> : <Link className="btn btn-danger" to={"/private2"}>Privado</Link>}
+				{state.isAuthenticated ? <><div><Link className="btn btn-primary me-1" to={"/"}>Home</Link><Link className="btn btn-success" to={"/private"}>Privado</Link></div></> : <Link className="btn btn-danger" to={"/pr1vate"}>Privado</Link>}
 				<div className="ml-auto">
 					{!state.isAuthenticated ? <><Link className="btn btn-primary me-1" to={"/login"}>Login</Link>
 						<Link className="btn btn-primary" to={"/register"}>Register</Link></> : <><button onClick={logout} className="btn btn-danger text-center">Cerrar sesión</button></>}

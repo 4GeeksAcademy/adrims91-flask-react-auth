@@ -11,12 +11,12 @@ export const Private = () => {
 			navigate('/login');
 		}
 	}, [state.isAuthenticated])
-	
+
 
 	return (
 		<>
 			<div className="text-center mt-5">
-				<p>Bienvenido {state.user}</p>
+				<p>Bienvenido/a a tu página privada {state.user}</p>
 			</div>
 		</>
 	);

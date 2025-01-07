@@ -5,7 +5,7 @@ import { AppProvider } from "./context/AppContext";
 
 import { Home } from "./pages/Home";
 import { Private } from "./pages/private";
-import { Private2 } from "./pages/privateFake";
+import { Pr1vate } from "./pages/privateFake";
 import { Register } from "./component/Register";
 import { Login } from "./component/Login";
 
@@ -24,7 +24,7 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Private />} path="/private" />
-                        <Route element={<Private2/>} path="/private2" />
+                        <Route element={<Pr1vate />} path="/pr1vate" />
                         <Route element={<Register />} path="/register" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<h1>Not found!</h1>} path="*" />
