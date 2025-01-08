@@ -1,20 +1,17 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AppContext } from "../context/AppContext";
+import { useNavigate } from "react-router-dom";
 
 export const Register = () => {
     const { state, register } = useContext(AppContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (state.message) {
             setTimeout(() => {
-                window.location.href = "/login";
-            }, 2000);
-        }
-        if (state.error) {
-            setTimeout(() => {
-                window.location.href = "/register";
+                navigate('/login');
             }, 2000);
         }
     }, [state]);

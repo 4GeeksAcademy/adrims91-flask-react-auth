@@ -71,7 +71,8 @@ export const AppReducer = (state, action) => {
         case 'CLEAR_MESSAGE':
             return {
                 ...state,
-                message: null
+                message: null,
+                error:null
             }
         default:
             return state

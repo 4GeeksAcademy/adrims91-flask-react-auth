@@ -14,11 +14,6 @@ export const Login = () => {
                 navigate('/private')
             }, 1000);
         }
-        if (state.error) {
-            setTimeout(() => {
-                navigate('/login')
-            }, 1000);
-        }
     }, [state]);
 
 

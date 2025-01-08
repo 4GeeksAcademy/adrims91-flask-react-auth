@@ -19,9 +19,15 @@ export const AppProvider = ({ children }) => {
 
             if (response.ok) {
                 dispatch({ type: 'REGISTER_SUCCESS', payload: { message: 'Usuario creado correctamente.' } });
+                setTimeout(() => {
+                    dispatch({ type: 'CLEAR_MESSAGE' });
+                }, 1500);
                 return data;
             } else {
                 dispatch({ type: 'REGISTER_ERROR', payload: { error: data.error } });
+                setTimeout(() => {
+                    dispatch({ type: 'CLEAR_MESSAGE' });
+                }, 1500);
             }
         } catch (error) {
             dispatch({ type: 'REGISTER_ERROR', payload: { error: 'Error de red o del servidor' } });
@@ -41,12 +47,21 @@ export const AppProvider = ({ children }) => {
             if (response.ok) {
                 const data = await response.json();
                 dispatch({ type: 'LOGIN_SUCCESS', payload: { message: 'Autenticado.', user: data.user, token: data.token, id: data.id } });
+                setTimeout(() => {
+                    dispatch({ type: 'CLEAR_MESSAGE' });
+                }, 1500);
             } else {
                 const errorData = await response.json();
                 dispatch({ type: 'LOGIN_ERROR', payload: { error: errorData.error } });
+                setTimeout(() => {
+                    dispatch({ type: 'CLEAR_MESSAGE' });
+                }, 1500);
             }
         } catch (error) {
             dispatch({ type: 'LOGIN_ERROR', payload: { error: 'Error de red o del servidor' } });
+            setTimeout(() => {
+                dispatch({ type: 'CLEAR_MESSAGE' });
+            }, 1500);
         }
     };
 
@@ -54,7 +69,7 @@ export const AppProvider = ({ children }) => {
         dispatch({ type: 'LOGOUT', payload: { message: 'Sesión cerrada.' } });
         setTimeout(() => {
             dispatch({ type: 'CLEAR_MESSAGE' });
-        }, 1000);
+        }, 1500);
     };
 
     return (
