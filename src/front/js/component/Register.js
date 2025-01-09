@@ -19,6 +19,7 @@ export const Register = () => {
 
     return (
         <>
+            <h1 className="text-center">Regístrate</h1>
             <form
                 className="text-center"
                 onSubmit={e => {
@@ -28,19 +29,22 @@ export const Register = () => {
                     setPassword("");
                 }}>
                 <input
+                    className="form-control mb-2 text-center w-50 m-auto"
                     type="text"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     placeholder="Email"
                 />
                 <input
+                    className="form-control mb-2 text-center w-50 m-auto"
                     type="password"
                     value={password}
                     onChange={e => setPassword(e.target.value)}
-                    placeholder="Password"
+                    placeholder="Contraseña"
                 />
                 <input
-                    value={"Create user"}
+                    className="btn btn-success"
+                    value={"Crear usuario"}
                     type="submit"
                 />
                 {state.message && <div><p className="text-success">{state.message}</p></div>}

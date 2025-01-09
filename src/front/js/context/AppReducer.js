@@ -5,7 +5,8 @@ export const initialState = {
     token: sessionStorage.getItem('token'),
     error: null,
     message: null,
-    loading: false
+    loading: false,
+    tasks: []
 }
 
 export const AppReducer = (state, action) => {
@@ -72,7 +73,7 @@ export const AppReducer = (state, action) => {
             return {
                 ...state,
                 message: null,
-                error:null
+                error: null
             }
         default:
             return state
