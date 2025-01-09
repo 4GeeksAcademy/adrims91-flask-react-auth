@@ -17,8 +17,9 @@ CORS(api)
 @api.route('/register', methods=['POST'])
 def create_user():
     data = request.get_json()
-    if "email" not in data or "password" not in data:
-        return jsonify({"error": "Faltan datos obligatorios"}), 422
+    if not data['email'] or not data['password']:
+        return jsonify({"error": "Datos obligatorios vacíos"}), 422
+    
     email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
 
     if not re.match(email_regex, data['email']):
