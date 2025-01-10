@@ -23,7 +23,7 @@ export const Private = () => {
 			<div className="text-center mt-5">
 				<p>Bienvenido/a a tu página privada {state.user}, estas son tus tareas:</p>
 			</div>
-			{state.tasks.length > 0 ? <div className="container">
+			{state.tasks ? <div className="container">
 				<ul className="list-group">
 					{state.tasks.map(task => (
 						<li key={task.id} className="list-group-item text-center mb-1">
