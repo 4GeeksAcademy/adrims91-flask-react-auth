@@ -15,7 +15,7 @@ export const Private = () => {
 
 	useEffect(() => {
 		getTasks(state.id)
-	}, [navigate, state.message, state.error])
+	}, [state.message, state.error])
 
 
 	return (
@@ -25,8 +25,8 @@ export const Private = () => {
 			</div>
 			{state.tasks ? <div className="container">
 				<ul className="list-group">
-					{state.tasks.map(task => (
-						<li key={task.id} className="list-group-item text-center mb-1">
+					{state.tasks.map((task, index) => (
+						<li key={task.id || index} className="list-group-item text-center mb-1">
 							<i onClick={() => {
 								const response = prompt('Deseas borrar esta tarea?')
 								if (response.toLowerCase() === 'yes') {
