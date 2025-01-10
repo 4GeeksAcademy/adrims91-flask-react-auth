@@ -75,6 +75,23 @@ export const AppReducer = (state, action) => {
                 message: null,
                 error: null
             }
+        case 'GET_TASKS':
+            return {
+                ...state,
+                tasks: action.payload.tasks
+            }
+        case 'ADD_TASK_SUCCESS':
+            return {
+                ...state,
+                tasks: [...state.tasks, action.payload.task],
+                message: action.payload.message
+            }
+        case 'ADD_TASK_ERROR':
+            return {
+                ...state,
+                message: null,
+                error: action.payload.error
+            }
         default:
             return state
     }

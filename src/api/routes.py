@@ -14,7 +14,7 @@ api = Blueprint('api', __name__)
 CORS(api)
 
 
-@api.route('/register', methods=['POST'])
+@api.route('/users', methods=['POST'])
 def create_user():
     data = request.get_json()
     if not data['email'] or not data['password']:
@@ -57,4 +57,65 @@ def private():
     user = User.query.filter_by(email=current_user_email).first()
     if not user:
         return jsonify({"error": "Usuario no encontrado"}), 404
-    return jsonify({"user": user.email, "id": user.id})
+    return jsonify({"usuario": user.email, "id": user.id})
+@api.route('/users')
+def get_users():
+    users = User.query.all()
+    users = list(map(lambda x: x.serialize(), users))
+    if not users:
+        return jsonify({"error": "No hay usuarios creados."})
+    return jsonify({"Usuarios": users})
+@api.route('/users/<int:id>')
+def get_user(id):
+    user = User.query.get(id)
+    if not user:
+        return jsonify({"error": "Usuario no encontrado."}), 404
+    return jsonify({"Usuario": user.serialize()})
+@api.route('/users/<int:id>/tasks', methods=['GET'])
+def get_tasks(id):
+    user = User.query.get(id)
+    tasks = Task.query.filter_by(user_id=id)
+    tasks = list(map(lambda x: x.serialize(), tasks))
+    if not user:
+        return jsonify({"error": "Usuario no encontrado"}), 404
+    return jsonify({"tasks": tasks})
+@api.route('users/<int:id>/tasks', methods=['POST'])
+def add_task(id):
+    data = request.get_json()
+    user = User.query.get(id)
+    if not user:
+        return jsonify({"error": "Usuario no encontrado"}), 404
+    if not data['description']:
+        return jsonify({"error": "No puedes crear una tarea vacía."}), 400
+    new_task = Task(description=data['description'], is_done=False, user_id=id)
+    try:
+        db.session.add(new_task)
+        db.session.commit()
+        return jsonify({"task": new_task.serialize(), "id": new_task.id})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)})
+@api.route('users/<int:id>/tasks/<int:task_id>', methods=['GET'])
+def get_task(id,task_id):
+    user = User.query.get(id)
+    if not user:
+        return jsonify({"error": "usuario no encontrado"}), 404
+    task = Task.query.get(task_id)
+    if not task or task.user_id != id:
+        return jsonify({"error": "Tarea no encontrada o no pertenece al usuario."}), 404
+    return jsonify({"tasks": task.serialize()})
+@api.route('users/<int:id>/tasks/<int:task_id>', methods=['DELETE'])
+def delete_task(id,task_id):
+    user = User.query.get(id)
+    if not user:
+        return jsonify({"error": "usuario no encontrado"}), 404
+    task = Task.query.get(task_id)
+    if not task or task.user_id != id:
+        return jsonify({"error": "Tarea no encontrada o no pertenece al usuario."}), 404
+    try:
+        db.session.delete(task)
+        db.session.commit()
+        return jsonify({"message": "Tarea eliminada satisfactoriamente."}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
