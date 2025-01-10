@@ -3,7 +3,7 @@ import { AppContext } from "../context/AppContext";
 import { useNavigate } from "react-router-dom";
 
 export const Private = () => {
-	const { state, getTasks, addTask } = useContext(AppContext)
+	const { state, getTasks, addTask, deleteTask } = useContext(AppContext)
 	const navigate = useNavigate()
 	const [inputValue, setInputValue] = useState('')
 
@@ -27,7 +27,12 @@ export const Private = () => {
 				<ul className="list-group">
 					{state.tasks.map(task => (
 						<li key={task.id} className="list-group-item text-center mb-1">
-							{task.description}
+							<i onClick={() => {
+								const response = prompt('Deseas borrar esta tarea?')
+								if (response.toLowerCase() === 'yes') {
+									deleteTask(state.id, task.id)
+								} else return
+							}} className="fa-solid fa-minus me-3"></i>{task.description}
 						</li>
 					))}
 				</ul>

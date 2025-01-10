@@ -20,13 +20,13 @@ export const AppProvider = ({ children }) => {
                 dispatch({ type: 'REGISTER_SUCCESS', payload: { message: 'Usuario creado correctamente.' } });
                 setTimeout(() => {
                     dispatch({ type: 'CLEAR_MESSAGE' });
-                }, 1500);
+                }, 1000);
                 return data;
             } else {
                 dispatch({ type: 'REGISTER_ERROR', payload: { error: data.error } });
                 setTimeout(() => {
                     dispatch({ type: 'CLEAR_MESSAGE' });
-                }, 1500);
+                }, 1000);
             }
         } catch (error) {
             dispatch({ type: 'REGISTER_ERROR', payload: { error: 'Error de red o del servidor' } });
@@ -48,19 +48,19 @@ export const AppProvider = ({ children }) => {
                 dispatch({ type: 'LOGIN_SUCCESS', payload: { message: 'Autenticado.', user: data.user, token: data.token, id: data.id } });
                 setTimeout(() => {
                     dispatch({ type: 'CLEAR_MESSAGE' });
-                }, 1500);
+                }, 1000);
             } else {
                 const errorData = await response.json();
                 dispatch({ type: 'LOGIN_ERROR', payload: { error: errorData.error } });
                 setTimeout(() => {
                     dispatch({ type: 'CLEAR_MESSAGE' });
-                }, 1500);
+                }, 1000);
             }
         } catch (error) {
             dispatch({ type: 'LOGIN_ERROR', payload: { error: 'Error de red o del servidor' } });
             setTimeout(() => {
                 dispatch({ type: 'CLEAR_MESSAGE' });
-            }, 1500);
+            }, 1000);
         }
     };
 
@@ -68,7 +68,7 @@ export const AppProvider = ({ children }) => {
         dispatch({ type: 'LOGOUT', payload: { message: 'Sesión cerrada.' } });
         setTimeout(() => {
             dispatch({ type: 'CLEAR_MESSAGE' });
-        }, 1500);
+        }, 1000);
     };
 
     const getTasks = async (user_id) => {
@@ -102,21 +102,45 @@ export const AppProvider = ({ children }) => {
                 dispatch({ type: 'ADD_TASK_SUCCESS', payload: { "task": data, message: 'Tarea añadida satisfactoriamente' } })
                 setTimeout(() => {
                     dispatch({ type: 'CLEAR_MESSAGE' })
-                }, 500);
+                }, 1000);
             } else {
                 const errorData = await response.json()
                 dispatch({ type: 'ADD_TASK_ERROR', payload: { error: errorData.error } })
                 setTimeout(() => {
                     dispatch({ type: 'CLEAR_MESSAGE' })
-                }, 1500);
+                }, 1000);
             }
         } catch (error) {
             dispatch({ "error": error })
         }
     }
+    const deleteTask = async (user_id, task_id) => {
+        try {
+            const response = await fetch(`https://didactic-guide-x5964qx4g6g43vr9-3001.app.github.dev/api/users/${user_id}/tasks/${task_id}`, {
+                method: 'DELETE'
+            })
+            if (response.ok) {
+                dispatch({ type: 'DELETE_TASK', payload: { message: 'Tarea eliminada correctamente.' } })
+                setTimeout(() => {
+                    dispatch({ type: 'CLEAR_MESSAGE' })
+                }, 1000);
+            } else {
+                const errorData = await response.json()
+                dispatch({ type: 'DELETE_TASK_ERROR', payload: { error: errorData } })
+                setTimeout(() => {
+                    dispatch({ type: 'CLEAR_MESSAGE' })
+                }, 1000);
+            }
+        } catch (error) {
+            dispatch({ type: 'DELETE_TASK_ERROR', payload: { error: error } })
+            setTimeout(() => {
+                dispatch({ type: 'CLEAR_MESSAGE' })
+            }, 1000);
+        }
+    }
 
     return (
-        <AppContext.Provider value={{ state, dispatch, register, login, logout, getTasks, addTask }}>
+        <AppContext.Provider value={{ state, dispatch, register, login, logout, getTasks, addTask, deleteTask }}>
             {children}
         </AppContext.Provider>
     );

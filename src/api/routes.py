@@ -103,7 +103,7 @@ def get_task(id,task_id):
     task = Task.query.get(task_id)
     if not task or task.user_id != id:
         return jsonify({"error": "Tarea no encontrada o no pertenece al usuario."}), 404
-    return jsonify({"tasks": task.serialize()})
+    return jsonify({"tasks": task.serialize(), "task_id": task.id})
 @api.route('users/<int:id>/tasks/<int:task_id>', methods=['DELETE'])
 def delete_task(id,task_id):
     user = User.query.get(id)

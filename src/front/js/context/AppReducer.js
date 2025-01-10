@@ -92,6 +92,17 @@ export const AppReducer = (state, action) => {
                 message: null,
                 error: action.payload.error
             }
+        case 'DELETE_TASK':
+            return {
+                ...state,
+                tasks: [state.tasks.filter(task => task.id != action.payload.id)],
+                message: action.payload.message
+            }
+        case 'DELETE_ERROR':
+            return {
+                ...state,
+                error: action.payload.error
+            }
         default:
             return state
     }
