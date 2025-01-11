@@ -29,7 +29,7 @@ export const Login = () => {
                         onSubmit={e => {
                             e.preventDefault();
                             setLoading(true);
-                            login(email, password)
+                            login(email.toLowerCase(), password.toLowerCase())
                                 .finally(() => {
                                     setLoading(false);
                                     setEmail("");

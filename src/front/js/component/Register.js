@@ -25,7 +25,7 @@ export const Register = () => {
                     className="text-center"
                     onSubmit={e => {
                         e.preventDefault();
-                        register(email, password);
+                        register(email.toLowerCase(), password.toLowerCase());
                         setEmail("");
                         setPassword("");
                     }}>
