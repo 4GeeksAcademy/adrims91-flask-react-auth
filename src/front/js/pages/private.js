@@ -29,7 +29,7 @@ export const Private = () => {
 						<li key={task.id || index} className="list-group-item text-center mb-1">
 							<i onClick={() => {
 								const response = prompt('Deseas borrar esta tarea?')
-								if (response.toLowerCase() === 'yes') {
+								if (response.toLowerCase() === 'si') {
 									deleteTask(state.id, task.id)
 								} else return
 							}} className="fa-solid fa-minus me-3"></i>{task.description}
